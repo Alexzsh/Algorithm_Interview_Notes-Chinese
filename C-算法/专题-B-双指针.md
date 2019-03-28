@@ -108,6 +108,7 @@ Index
 
 **拓展**
 - 如果存在多个答案，并要求输出所有不重复的可能
+
     > [三数之和](#三数之和)
 
 **思路 1**
@@ -143,6 +144,7 @@ Index
 **思路 2**
 - 本题还可以利用 Hash 表解决，时间复杂度 `O(N)`，空间复杂度 `O(N)`
 - 使用 Hash 表不要求数组有序
+
     > LeetCode/[1. 两数之和](https://leetcode-cn.com/problems/two-sum/description/)
 - **Python**（Hash）
     ```python
@@ -356,7 +358,8 @@ class Solution:
 
 ## 两数之和 - 小于等于目标值的个数
 > LintCode/[609. 两数和-小于或等于目标值](https://www.lintcode.com/problem/two-sum-less-than-or-equal-to-target)
->> 此为收费问题：[LintCode 练习-609. 两数和-小于或等于目标值](https://blog.csdn.net/qq_36387683/article/details/81460276) - CSDN博客 
+>
+> > 此为收费问题：[LintCode 练习-609. 两数和-小于或等于目标值](https://blog.csdn.net/qq_36387683/article/details/81460276) - CSDN博客 
 
 **问题描述**
 ```
@@ -539,33 +542,28 @@ class Solution:
 <div align="center"><img src="../_assets/TIM截图20180921215706.png" height="" /></div>
 
 **思路 1**
-- 一个简单的方法是**遍历两次**数组，分别记录每个位置左侧的最高点和右侧的最低点
-- **C++**
-    ```C++
-    class Solution {
-    public:
-        int trap(vector<int>& H) {
-            int n = H.size();
-            
-            vector<int> l_max(H);
-            vector<int> r_max(H);
-            
-            for(int i=1; i<n; i++)
-                l_max[i] = max(l_max[i-1], l_max[i]);
-            
-            for(int i=n-2; i>=0; i--)
-                r_max[i] = max(r_max[i+1], r_max[i]);
-            
-            int ret = 0;
-            for (int i=1; i<n-1; i++)
-                ret += min(l_max[i], r_max[i]) - H[i];
-            
-            return ret;
-        }
-    };
-    ``` 
+- 一个简单的方法是**遍历两次**数组，分别记录每个位置左侧的最高点和右侧的最高点
+- **python**
+
+    ```python
+    class Solution:
+        def trap(self, height: List[int]) -> int:
+            length = len(height)
+            max_l = [0]*length
+            max_r = [0]*length
+    
+            for i in range(1,length):
+                max_l[i] = max(max_l[i-1],height[i-1])
+            for i in range(length-2,-1,-1):
+                max_r[i] = max(max_r[i+1],height[i+1])
+            res = 0
+            for i in range(0,len(max_l)):
+                res += max(0,min(max_l[i],max_r[i])-height[i])
+            return res
+    ```
 
 **思路 2**
+
 - 双指针，遍历一次数组
 - **Python**
     ```python
@@ -1137,7 +1135,8 @@ class Solution:
 **思路**
 - 搜索最长回文子串的方法很多；最主要的是动态规划和双指针方法
     > 这两种方法的时间复杂度都不是最优的， `O(N^2)`；此外还存在 `O(NlogN)` 和 `O(N)` 方法，但是这些方法并不存在普适性
-    >> ./动态规划/[最长回文子串](./专题-B-动态规划#最长回文子串)
+    >
+    > > ./动态规划/[最长回文子串](./专题-B-动态规划#最长回文子串)
 - 这里介绍的使用**双指针**的方法；
 - 值得注意的一点是，回文子串的长度可能为奇或偶：一个简单的处理方法是对每个位置都判断奇偶两种情况
 
@@ -1198,6 +1197,7 @@ class Solution:
 
 **思路**
 - 模式匹配，常见的高效算法有 KMP 算法和 Karp-Rabin（KR）算法
+
     > [字符串模式匹配算法——BM、Horspool、Sunday、KMP、KR、AC算法 - 单车博客园](https://www.cnblogs.com/dancheblog/p/3517338.html) - 博客园 
 - 这里只介绍双指针方法 `O(nm)` 和 Karp-Rabin 算法 `O(n+m)`
 
